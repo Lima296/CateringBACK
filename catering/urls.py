@@ -21,3 +21,19 @@ urlpatterns = [
     path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
+
+from django.contrib.auth import get_user_model
+try:
+    User = get_user_model()
+    # Cambiá estos datos por los que vos quieras usar
+    if not User.objects.filter(correo="admin@catering.com").exists():
+        User.objects.create_superuser(
+            correo="admin@catering.com",
+            contraseña="ContraseñaSegura123",
+            nombre="Admin",
+            apellido="General",
+            DNI="12345678"
+        )
+        print("✓ Superusuario creado con éxito en producción")
+except Exception as e:
+    pass
