@@ -1,0 +1,24 @@
+# Entornos virtuales de Python
+venv/
+.venv/
+env/
+ENV/
+pyenv/
+
+# Archivos de caché
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Configuración local y credenciales (¡CRÍTICO!)
+.env
+.env.*
+
+# Base de datos local por si te quedó algún rastro
+*.sqlite3
+
+# Archivos del sistema y de editores de código
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
