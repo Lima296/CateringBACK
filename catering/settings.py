@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 
 
 import os
+import dj_database_url
 from datetime import timedelta
 
 # Application definition
@@ -84,16 +85,26 @@ WSGI_APPLICATION = 'catering.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'catering',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432',
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if DATABASE_URL:
+    # Si estamos en Render, usamos su URL de conexión directa
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
     }
-}
+else:
+    # Si estás en tu compu local, sigue usando tu Postgres local de siempre
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'catering',
+            'USER': 'postgres',
+            'PASSWORD': 'tu_contraseña_local',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+        }
+    }
 
 # REST Framework & JWT
 REST_FRAMEWORK = {
