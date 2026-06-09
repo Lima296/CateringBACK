@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-)5x5_jq9+9sj0^*a%3)(g)80r5woi+xlls!ulh)p1!mn+)ocno
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'cateringback.onrender.com',  # Tu dominio de Render
+    '127.0.0.1',                  # Mantené estos para poder probar en tu compu
+    'localhost',
+]
 
 
 import os
