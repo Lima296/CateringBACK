@@ -22,18 +22,26 @@ urlpatterns = [
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 
+from django.http import HttpResponse
 from django.contrib.auth import get_user_model
-try:
-    User = get_user_model()
-    # Cambiá estos datos por los que vos quieras usar
-    if not User.objects.filter(correo="admin@catering.com").exists():
-        User.objects.create_superuser(
-            correo="admin@catering.com",
-            contraseña="ContraseñaSegura123",
-            nombre="Admin",
-            apellido="General",
-            DNI="12345678"
-        )
-        print("✓ Superusuario creado con éxito en producción")
-except Exception as e:
-    pass
+def crear_admin_remoto(request):
+    try:
+        User = get_user_model()
+        email_buscar = "admin@catering.com"
+        
+        if not User.objects.filter(correo=email_buscar).exists():
+            # Creamos el superusuario asegurando los campos obligatorios de tu modelo
+            User.objects.create_superuser(
+                correo=email_buscar,
+                password="admincatering", # Django nativo usa 'password' internamente para el hash
+                nombre="Leonardo",
+                apellido="Lima",
+                DNI="42787728",
+                is_staff=True,    # Esto es lo que te pide el cartel ("staff account")
+                is_superuser=True
+            )
+            return HttpResponse("<h1>¡Éxito! Superusuario creado correctamente en la nube.</h1>")
+        else:
+            return HttpResponse("<h1>El usuario admin@catering.com ya existía en la base de datos.</h1>")
+    except Exception as e:
+        return HttpResponse(f"<h1>Error al crear: {str(e)}</h1>")
