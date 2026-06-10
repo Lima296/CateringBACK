@@ -23,7 +23,7 @@ def crear_admin_remoto(request):
                 password="admincatering", # Cambiada a tu contraseña deseada
                 nombre="Leonardo",
                 apellido="Lima",
-                DNI="42787728",
+                dni="42787728",
                 is_staff=True,    
                 is_superuser=True
             )
