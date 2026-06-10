@@ -16,10 +16,10 @@ def crear_admin_remoto(request):
         User = get_user_model()
         email_buscar = "admin@catering.com"
         
-        if not User.objects.filter(correo=email_buscar).exists():
+        if not User.objects.filter(email=email_buscar).exists():
             # Creamos el superusuario asegurando los campos obligatorios de tu modelo
             User.objects.create_superuser(
-                correo=email_buscar,
+                email=email_buscar,
                 password="admincatering", # Cambiada a tu contraseña deseada
                 nombre="Leonardo",
                 apellido="Lima",
